@@ -16,4 +16,5 @@
    pip install pandas
    pip install webdriver-manager
    pip install matplotlib
+   pip install openpyxl
    ```
