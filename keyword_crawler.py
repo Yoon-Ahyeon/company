@@ -52,7 +52,7 @@ driver.find_element(by=By.XPATH,value='//*[@id="log.login"]').click()
 time.sleep(1)
 
 # 네이버 카페 url
-baseurl='https://cafe.naver.com/skybluezw4rh/'
+baseurl=''
 clubid = '' # 네이버 카페 클럽 아이디 입력
 # keyword = "" # 한국어는 인코딩된 주소로, 영어/숫자는 그대로
 keyword = ""

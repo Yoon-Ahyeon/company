@@ -63,8 +63,8 @@ def collect_comments_and_replies():
 driver = webdriver.Chrome()
 
 url='https://nid.naver.com/nidlogin.login'
-id_ = 'ahyeon24' # 자신의 naver id (login할 때 필요)
-pw = 'Heyho9209!'# 자신의 naver password (login할 때 필요)
+id_ = '' # 자신의 naver id (login할 때 필요)
+pw = ''# 자신의 naver password (login할 때 필요)
     
 driver.get(url)
 driver.implicitly_wait(1)
@@ -77,9 +77,8 @@ time.sleep(1)
 
 # 여러 개의 URL 리스트
 urls = [
-    "https://cafe.naver.com/skybluezw4rh/8555527",
-    "https://cafe.naver.com/skybluezw4rh/8064963",
-    "https://cafe.naver.com/skybluezw4rh/11995277",
+    "example1", 
+    "example2"
 ]  
 
 # 결과를 저장할 데이터프레임 생성 (댓글과 답글 정보 포함)

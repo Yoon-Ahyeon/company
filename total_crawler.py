@@ -40,8 +40,8 @@ driver = webdriver.Chrome(options=options)
 
 # 네이버 로그인 id, pwd
 url='https://nid.naver.com/nidlogin.login'
-id_ = 'ahyeon24'
-pw = 'Heyho9209!'
+id_ = ''
+pw = ''
     
 driver.get(url)
 driver.implicitly_wait(1)
@@ -53,9 +53,9 @@ driver.find_element(by=By.XPATH,value='//*[@id="log.login"]').click()
 time.sleep(1)
 
 # 네이버 카페 url
-baseurl='https://cafe.naver.com/skybluezw4rh/'
-clubid = '29434212' # 네이버 카페 클럽 아이디 입력
-menuid = '16' # 네이버 카페 클럽 게시판 입력
+baseurl=''
+clubid = '' # 네이버 카페 클럽 아이디 입력
+menuid = '' # 네이버 카페 클럽 게시판 입력
 
 time.sleep(1)
 
@@ -253,7 +253,7 @@ while page < num_page:
         ## 1번 저장 방법
         if len(comment_1_list) == 0:
             comment_1_list = ["NO COMMENT"]  
-            
+
         for comment in comment_1_list:
             new_row = {
                 '게시판': board,   
