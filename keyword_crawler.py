@@ -39,8 +39,8 @@ driver = webdriver.Chrome(options=options)
 
 # 네이버 로그인 id, pwd
 url='https://nid.naver.com/nidlogin.login'
-id_ = 'ahyeon24'
-pw = 'Heyho9209!'
+id_ = ''
+pw = ''
     
 driver.get(url)
 driver.implicitly_wait(1)
@@ -53,9 +53,9 @@ time.sleep(1)
 
 # 네이버 카페 url
 baseurl='https://cafe.naver.com/skybluezw4rh/'
-clubid = '29434212' # 네이버 카페 클럽 아이디 입력
-# keyword = "%BB%FD%B1%E2%BA%CE" # 한국어는 인코딩된 주소로, 영어/숫자는 그대로
-keyword = "ph365"
+clubid = '' # 네이버 카페 클럽 아이디 입력
+# keyword = "" # 한국어는 인코딩된 주소로, 영어/숫자는 그대로
+keyword = ""
 
 time.sleep(1)
 

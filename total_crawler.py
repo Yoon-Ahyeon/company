@@ -253,6 +253,7 @@ while page < num_page:
         ## 1번 저장 방법
         if len(comment_1_list) == 0:
             comment_1_list = ["NO COMMENT"]  
+            
         for comment in comment_1_list:
             new_row = {
                 '게시판': board,   
