@@ -1,3 +1,9 @@
+"""
+    이 파일은 게시판명, 제목, 날짜, 시간, 조회수, 본문, 댓글을 추출하는 코드입니다.
+    검색어가 입력된 게시글을 추출하는 것이 가능합니다.
+    코드 실행이 완료되면, 두 개의 csv 파일이 생성됩니다.
+    **동일한 파일명으로 코드를 돌리면, 덮어씌워지니 주의하세요!!!
+"""
 import time
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
@@ -271,9 +277,6 @@ while page < num_page:
         manual_df.to_csv(r"test_manual_analysis.csv", encoding="utf-8-sig", index=False)
 
         # 2번 저장 방법 - data 분석용
-        if len(comment_1_list) == 0:
-            comment_1_list = ["NO COMMENT"]  
-
         comments_string = "\n\n".join(comment_1_list)
 
         data_df.loc[index] = [

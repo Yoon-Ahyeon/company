@@ -1,7 +1,7 @@
 """
-    이 파일은 게시판명, 제목, 날짜, 시간, 조회수, 본문, 댓글을 추출하는 코드입니다.
-    검색어 입력은 안되고, 링크 입력만 가능합니다. 
-    코드 실행이 완료되면, 두 개의 csv 파일이 생성됩니다.
+    이 파일은 게시판명, 제목, 날짜, 시간, 조회수를 추출하는 코드입니다.
+    검색어 입력 X, 링크만 입력 가능
+    코드 실행이 완료되면, 한 개의 csv 파일이 생성됩니다.
     **동일한 파일명으로 코드를 돌리면, 덮어씌워지니 주의하세요!!!
 """
 import time
@@ -19,8 +19,7 @@ import pandas as pd
 from urllib.request import urlretrieve
 import os
 
-manual_df = pd.DataFrame([],columns=["board", "title", "Date", "Time", "View", "Content", "Comment"])
-data_df = pd.DataFrame([],columns=["board", "title", "Date", "Time", "View", "Content", "Comment"])
+data_df = pd.DataFrame([],columns=["board", "title", "date", "time", "view"])
 
 # 게시글 본문 내용 크롤링
 def collect_article_content():
@@ -45,8 +44,8 @@ driver = webdriver.Chrome(options=options)
 
 # 네이버 로그인 id, pwd
 url='https://nid.naver.com/nidlogin.login'
-id_ = ''
-pw = ''
+id_ = 'ahyeon24'
+pw = 'Heyho9209!'
     
 driver.get(url)
 driver.implicitly_wait(1)
@@ -58,16 +57,16 @@ driver.find_element(by=By.XPATH,value='//*[@id="log.login"]').click()
 time.sleep(1)
 
 # 네이버 카페 url
-baseurl=''
-clubid = '' # 네이버 카페 클럽 아이디 입력
-menuid = '' # 네이버 카페 클럽 게시판 입력
+baseurl='https://cafe.naver.com/skybluezw4rh/'
+clubid = '29434212' # 네이버 카페 클럽 아이디 입력
+menuid = '16' # 네이버 카페 클럽 게시판 입력
 
 time.sleep(1)
 
 # 네이버 페이지 개수 (크롤링할 페이지 개수)
-num_page = 1
+num_page = 2
 
-page = 0 # 현재 페이지 번호 초기화
+page = 0 # 몇 번째 페이지부터 저장을 원하는지 입력 (0부터 시작이기에 3페이지면, 2페이지로 입력)
 index = 0 # 데이터프레임 인덱스 초기화
 
 while page < num_page:
@@ -148,9 +147,6 @@ while page < num_page:
         
         # Title
         title = driver.find_element(By.CLASS_NAME, "title_text").text
-        
-        # contents
-        contents = collect_article_content()
 
         # Date
         dates_text = driver.find_element(By.CLASS_NAME, "date").text
@@ -159,32 +155,6 @@ while page < num_page:
         # Views
         views_text = driver.find_element(By.CLASS_NAME, "count").text
         views = re.sub(r'\D', '', views_text)  
-
-        # Comments
-        comtemp_list = another_soup.find_all('span', {'class':'text_comment'})
-        comment_1_list = []
-
-        for idx in range(len(comtemp_list)):
-            # 댓글 영역 찾기
-            another_soup_find_all_div_class_comment_area = another_soup.find_all('div', {'class':'comment_area'})[idx]
-
-            # 삭제된 댓글 처리
-            if another_soup_find_all_div_class_comment_area.text.strip() == '삭제된 댓글입니다.':
-                comment_1_list.append('Deleted')
-                continue
-
-            # 댓글 내용 추출      
-            comment_span = another_soup_find_all_div_class_comment_area.find_all('span', {'class':'text_comment'})
-    
-            if comment_span:  # Check if comment_span is not empty
-                comment = comment_span[0].text
-                comment_1_list.append(comment)
-            else:
-                comment_1_list.append("No comment available")
-
-        # 댓글이 없는 경우 처리
-        if len(comtemp_list) == 0:
-            comment_1_list.append("NO COMMENT")
 
         # 다음 게시물로 이동
         if idx_wow < len(wow) - 1:
@@ -255,40 +225,16 @@ while page < num_page:
         driver.implicitly_wait(1)
         time.sleep(1)
 
-        ## 1번 저장 방법
-        if len(comment_1_list) == 0:
-            comment_1_list = ["NO COMMENT"]  
-
-        for comment in comment_1_list:
-            new_row = {
-                'board': board,   
-                'title': title,
-                'date': dates,    
-                'time': times,
-                'view': views, 
-                'content': contents.replace('\n', ' ').replace('\r', ''), 
-                'comment': comment   
-            }
-            manual_df = manual_df.append(new_row, ignore_index=True)  
-
-        manual_df.to_csv(r"test_manual_analysis.csv", encoding="utf-8-sig", index=False)
-
-        # 2번 저장 방법 - data 분석용
-        comments_string = "\n\n".join(comment_1_list)
-
+        ## csv 저장
         data_df.loc[index] = [
             board,    
             title,
             dates,   
             times, 
-            views,
-            contents.replace('\n', ' ').replace('\r', ''), 
-            comments_string 
+            views
         ]
 
-        data_df.to_csv(r"test_data_analysis.csv", encoding="utf-8-sig", index=False)
-        
-        print(board, title, dates, views, contents, comment_1_list)
+        data_df.to_csv(r"test_info_analysis.csv", encoding="utf-8-sig", index=False)
 
         # main page에서 다음 페이지로 이동
         driver.get("https://cafe.naver.com/ArticleList.nhn?search.clubid="
@@ -301,5 +247,3 @@ while page < num_page:
         index += 1
         if page >= num_page:
             break
-
-print(df)

@@ -1,3 +1,9 @@
+"""
+    이 파일은 게시판명, 제목, 날짜, 시간, 조회수를 추출하는 코드입니다.
+    검색어 입력 X, 링크만 입력 가능
+    코드 실행이 완료되면, 한 개의 csv 파일이 생성됩니다.
+    **동일한 파일명으로 코드를 돌리면, 덮어씌워지니 주의하세요!!!
+"""
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
