@@ -19,7 +19,7 @@ import pandas as pd
 from urllib.request import urlretrieve
 import os
 
-data_df = pd.DataFrame([],columns=["board", "title", "date", "time", "view"])
+data_df = pd.DataFrame([],columns=["board", "title", "date", "time", "view", "comment_count"])
 
 # 게시글 본문 내용 크롤링
 def collect_article_content():
