@@ -6,7 +6,7 @@
 ### Installation
 1. Clone the repository:
    ```
-   !git clone https://github.com/Yoon-Ahyeon/company-crawling.git
+   git clone https://github.com/Yoon-Ahyeon/company-crawling.git
    ```
 
 2. Install the library:
