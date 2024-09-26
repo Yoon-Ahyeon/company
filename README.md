@@ -2,7 +2,7 @@
 
 ### Prerequisites
 - Python 3.7
-- 
+
 ### Installation
 1. Clone the repository:
    ```
