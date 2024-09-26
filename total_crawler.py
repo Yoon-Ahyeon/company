@@ -37,6 +37,8 @@ def collect_article_content():
             return main_element.get_attribute('innerText')
         except:
             return None
+        
+input("파일명 바꾸셨나요? 준비가 다 되었으면, 아무 숫자나 누르세요!") 
 
 driver = webdriver.Chrome()
 options = webdriver.ChromeOptions()

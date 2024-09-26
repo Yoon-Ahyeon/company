@@ -1,6 +1,7 @@
 """
-    이 파일은 게시판명, 제목, 날짜, 시간, 조회수를 추출하는 코드입니다.
-    검색어 입력 X, 링크만 입력 가능
+    이 파일은 게시판명, 제목, 날짜, 시간, 조회수, 댓글 수를 추출하는 코드입니다.
+    카페 링크 및 카테고리, 원하는 페이지를 입력하세요.
+    ** 카페 링크 입력 필수
     코드 실행이 완료되면, 한 개의 csv 파일이 생성됩니다.
     **동일한 파일명으로 코드를 돌리면, 덮어씌워지니 주의하세요!!!
 """
@@ -18,8 +19,9 @@ from selenium.webdriver.common.keys import Keys
 import pandas as pd
 from urllib.request import urlretrieve
 import os
+import sys
 
-data_df = pd.DataFrame([],columns=["board", "title", "date", "time", "view"])
+data_df = pd.DataFrame([],columns=["board", "title", "date", "time", "view", "comment_count"])
 
 # 게시글 본문 내용 크롤링
 def collect_article_content():
@@ -36,16 +38,19 @@ def collect_article_content():
             return main_element.get_attribute('innerText')
         except:
             return None
+        
+input("파일명 바꾸셨나요? 준비가 다 되었으면, 아무 숫자나 누르세요!") 
 
 driver = webdriver.Chrome()
 options = webdriver.ChromeOptions()
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
 driver = webdriver.Chrome(options=options)
 
+## 입력 필수
 # 네이버 로그인 id, pwd
 url='https://nid.naver.com/nidlogin.login'
-id_ = ''
-pw = ''
+id_ = 'id'
+pw = 'pwd'
     
 driver.get(url)
 driver.implicitly_wait(1)
@@ -56,17 +61,17 @@ driver.execute_script("document.getElementsByName('pw')[0].value=\'"+ pw + "\'")
 driver.find_element(by=By.XPATH,value='//*[@id="log.login"]').click()
 time.sleep(1)
 
-# 네이버 카페 url
-baseurl=''
+## 입력 필수
+baseurl='' # 네이버 카페 url, 마지막에 / 붙이기
 clubid = '' # 네이버 카페 클럽 아이디 입력
 menuid = '' # 네이버 카페 클럽 게시판 입력
 
 time.sleep(1)
 
-# 네이버 페이지 개수 (크롤링할 페이지 개수)
-num_page = 2
-
+## 입력 필수
+num_page = 2 # 네이버 페이지 개수 (크롤링할 페이지 개수)
 page = 0 # 몇 번째 페이지부터 저장을 원하는지 입력 (0부터 시작이기에 3페이지면, 2페이지로 입력)
+
 index = 0 # 데이터프레임 인덱스 초기화
 
 while page < num_page:
@@ -157,7 +162,6 @@ while page < num_page:
         views = re.sub(r'\D', '', views_text)  
 
         comment_count = driver.find_element(By.CLASS_NAME, "num").text
-        print(comment_count)
 
         # 다음 게시물로 이동
         if idx_wow < len(wow) - 1:
@@ -234,7 +238,8 @@ while page < num_page:
             title,
             dates,   
             times, 
-            views
+            views,
+            comment_count,
         ]
 
         data_df.to_csv(r"test_info_analysis.csv", encoding="utf-8-sig", index=False)

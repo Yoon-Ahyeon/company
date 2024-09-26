@@ -64,6 +64,7 @@ def collect_comments_and_replies():
         print(f"Error collecting comments and replies: {e}")
         return None, None
 
+input("파일명 바꾸셨나요? 준비가 다 되었으면, 아무 숫자나 누르세요!") 
     
 # 크롬 드라이버 실행
 driver = webdriver.Chrome()

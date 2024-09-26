@@ -18,6 +18,7 @@ from selenium.webdriver.common.keys import Keys
 import pandas as pd
 from urllib.request import urlretrieve
 import os
+import sys
 
 manual_df = pd.DataFrame([],columns=["board", "title", "date", "time", "view", "content", "comment"])
 data_df = pd.DataFrame([],columns=["board", "title", "date", "time", "view", "content", "comment"]) 
@@ -38,6 +39,8 @@ def collect_article_content():
         except:
             return None
 
+input("파일명 바꾸셨나요? 준비가 다 되었으면, 아무 숫자나 누르세요!") 
+
 driver = webdriver.Chrome()
 options = webdriver.ChromeOptions()
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
@@ -57,19 +60,18 @@ driver.execute_script("document.getElementsByName('pw')[0].value=\'"+ pw + "\'")
 driver.find_element(by=By.XPATH,value='//*[@id="log.login"]').click()
 time.sleep(1)
 
-# 네이버 카페 url
-baseurl=''
+## 입력 필수
+baseurl='' # 네이버 카페 url, 마지막에 / 붙이기
 clubid = '' # 네이버 카페 클럽 아이디 입력
-# keyword = "" # 한국어는 인코딩된 주소로, 영어/숫자는 그대로
-keyword = ""
+keyword = "" # 한국어는 인코딩된 주소로, 영어/숫자는 그대로
 
 time.sleep(1)
 
-# 네이버 페이지 개수 (크롤링할 페이지 개수)
-num_page = 3
-
+## 입력 필수
+num_page = 3 # 네이버 페이지 개수 (크롤링할 페이지 개수)
 page = 0 # 현재 페이지 번호 초기화 (몇 번 page부터 뽑을건지 입력 가능)
-index = 0 # 데이터프레임 인덱스 초기화
+
+index = 0 
 
 while page < num_page:
 
@@ -273,7 +275,8 @@ while page < num_page:
                 'comment': comment   
             }
             manual_df = manual_df.append(new_row, ignore_index=True)  
-
+        
+        ## 파일명 입력 필수
         manual_df.to_csv(r"test_manual_analysis.csv", encoding="utf-8-sig", index=False)
 
         # 2번 저장 방법 - data 분석용
@@ -287,8 +290,9 @@ while page < num_page:
             views,
             contents.replace('\n', ' ').replace('\r', ''), 
             comments_string 
-        ]
+        ]   
 
+        ## 파일명 입력 필수
         data_df.to_csv(r"test_data_analysis.csv", encoding="utf-8-sig", index=False)
         
         print(board, title, dates, views, contents, comment_1_list)
