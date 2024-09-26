@@ -302,4 +302,3 @@ while page < num_page:
         if page >= num_page:
             break
 
-print(df)

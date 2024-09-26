@@ -117,7 +117,7 @@ for url in urls:
         print(f"An error occurred while processing {url}: {e}")
         
 # 파일명 설정
-file_name = 'test_240925.xlsx'
+file_name = 'file_name.xlsx'
 
 # 새로운 파일로 저장 (덮어쓰기)
 all_data.to_excel(file_name, index=False, engine='openpyxl')
