@@ -281,14 +281,14 @@ while page < num_page:
             title,
             dates,   
             times, 
+            views,
             contents.replace('\n', ' ').replace('\r', ''), 
-            views,  
             comments_string 
         ]
 
         data_df.to_csv(r"test_data_analysis.csv", encoding="utf-8-sig", index=False)
         
-        # print(board, title, dates, views, contents, comment_1_list)
+        print(board, title, dates, views, contents, comment_1_list)
 
         # main page에서 다음 페이지로 이동
         driver.get("https://cafe.naver.com/ArticleSearchList.nhn?search.clubid="
