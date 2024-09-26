@@ -19,7 +19,7 @@ import pandas as pd
 from urllib.request import urlretrieve
 import os
 
-data_df = pd.DataFrame([],columns=["board", "title", "date", "time", "view", "comment_count"])
+data_df = pd.DataFrame([],columns=["board", "title", "date", "time", "view"])
 
 # 게시글 본문 내용 크롤링
 def collect_article_content():
@@ -155,6 +155,9 @@ while page < num_page:
         # Views
         views_text = driver.find_element(By.CLASS_NAME, "count").text
         views = re.sub(r'\D', '', views_text)  
+
+        comment_count = driver.find_element(By.CLASS_NAME, "num").text
+        print(comment_count)
 
         # 다음 게시물로 이동
         if idx_wow < len(wow) - 1:
