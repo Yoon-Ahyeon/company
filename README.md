@@ -1,8 +1,8 @@
 ## 사용 방법
 
 ### Prerequisites
-- Python 3.7
-- 
+- Python 3.7.X
+
 ### Installation
 1. Clone the repository:
    ```
